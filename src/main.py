@@ -1,8 +1,14 @@
-from fastapi import FastAPI
+from typing import Annotated
+
+from fastapi import FastAPI, Depends
+from fastapi.security import OAuth2PasswordBearer
 
 from schemas import RegistrationFormSchema, LoginFormSchema
 
 app = FastAPI()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+Token = Annotated[str, Depends(oauth2_scheme)]
 
 
 @app.get("/")
