@@ -10,13 +10,16 @@ async def register(form: RegistrationFormSchema):
     pass
 
 
+@app.post("/login")
 async def login(form: LoginFormSchema):
     pass
 
 
+@app.post("/logout")
 async def logout():
     pass
 
 
+@app.post("/me")
 async def me():
     pass
