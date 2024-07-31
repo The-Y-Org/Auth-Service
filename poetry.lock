@@ -91,6 +91,30 @@ dev = ["cogapp", "pre-commit", "pytest", "wheel"]
 tests = ["pytest"]
 
 [[package]]
+name = "beanie"
+version = "1.26.0"
+description = "Asynchronous Python ODM for MongoDB"
+optional = false
+python-versions = "<4.0,>=3.7"
+files = [
+    {file = "beanie-1.26.0-py3-none-any.whl", hash = "sha256:b45926c01d4a899c519c665c2a5f230990717e99f7fd68172a389ca33e7693b9"},
+    {file = "beanie-1.26.0.tar.gz", hash = "sha256:54016f4ec71ed0ea6ce0c7946a395090c45687f254dbbe1cf06eec608383f790"},
+]
+
+[package.dependencies]
+click = ">=7"
+lazy-model = "0.2.0"
+motor = ">=2.5.0,<4.0.0"
+pydantic = ">=1.10,<3.0"
+toml = "*"
+typing-extensions = {version = ">=4.7", markers = "python_version < \"3.11\""}
+
+[package.extras]
+doc = ["Markdown (>=3.3)", "Pygments (>=2.8.0)", "jinja2 (>=3.0.3)", "mkdocs (>=1.4)", "mkdocs-material (>=9.0)", "pydoc-markdown (>=4.8)"]
+queue = ["beanie-batteries-queue (>=0.2)"]
+test = ["asgi-lifespan (>=1.0.1)", "dnspython (>=2.1.0)", "fastapi (>=0.100)", "flake8 (>=3)", "httpx (>=0.23.0)", "pre-commit (>=2.3.0)", "pydantic-extra-types (>=2)", "pydantic-settings (>=2)", "pydantic[email]", "pyright (>=0)", "pytest (>=6.0.0)", "pytest-asyncio (>=0.21.0)", "pytest-cov (>=2.8.1)"]
+
+[[package]]
 name = "cffi"
 version = "1.16.0"
 description = "Foreign Function Interface for Python calling C code."
@@ -302,6 +326,20 @@ files = [
     {file = "idna-3.7-py3-none-any.whl", hash = "sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"},
     {file = "idna-3.7.tar.gz", hash = "sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"},
 ]
+
+[[package]]
+name = "lazy-model"
+version = "0.2.0"
+description = ""
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "lazy-model-0.2.0.tar.gz", hash = "sha256:57c0e91e171530c4fca7aebc3ac05a163a85cddd941bf7527cc46c0ddafca47c"},
+    {file = "lazy_model-0.2.0-py3-none-any.whl", hash = "sha256:5a3241775c253e36d9069d236be8378288a93d4fc53805211fd152e04cc9c342"},
+]
+
+[package.dependencies]
+pydantic = ">=1.9.0"
 
 [[package]]
 name = "motor"
@@ -635,6 +673,17 @@ anyio = ">=3.4.0,<5"
 full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7)", "pyyaml"]
 
 [[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
+    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -667,4 +716,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "a9d2329c218d2cc52e0501ee8a9751c40e28696649eb3d92c893dc186d62797e"
+content-hash = "8be2170253708ea0aad7865e311f0aa42d5cd1ddb44251fb62c9321c23f95f94"
