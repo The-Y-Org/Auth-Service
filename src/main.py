@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from typing import Annotated, Optional
+from typing import Annotated, Optional, Any
 
 from beanie import init_beanie
 from fastapi import FastAPI, Depends, HTTPException
@@ -12,7 +12,7 @@ from starlette.responses import Response
 from db import users_db
 from documents import UserDocument
 from schemas import RegistrationFormSchema, LoginFormSchema
-from security import get_hashed_password, verify_password, issue_jwt
+from security import get_hashed_password, verify_password, issue_jwt, get_jwt_payload, JWTException
 from settings import settings
 
 
@@ -30,6 +30,29 @@ app = FastAPI(lifespan=lifespan)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 Token = Annotated[str, Depends(oauth2_scheme)]
+
+
+# Add check that token isn't in blacklist
+def get_user_id_from_token(token: Token) -> str:
+    token_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid credentials (token expired or blacklisted)",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload: dict[str, Any] = get_jwt_payload(
+            token=token,
+            key=settings.jwt_secret_key,
+            algorithms=[settings.jwt_algorithm]
+        )
+
+        return payload.get("user_id")
+    except JWTException as e:
+        raise token_exception from e
+
+
+UserID = Annotated[str, Depends(get_user_id_from_token)]
 
 
 @app.post("/register")
@@ -84,10 +107,10 @@ async def login(form: LoginFormSchema) -> TokenData:
 
 
 @app.post("/logout")
-async def logout(token: Token):
+async def logout(user_id: UserID):
     pass
 
 
 @app.post("/me")
-async def me(token: Token):
-    pass
+async def me(user_id: UserID) -> Optional[UserDocument]:
+    return await UserDocument.get(user_id)
